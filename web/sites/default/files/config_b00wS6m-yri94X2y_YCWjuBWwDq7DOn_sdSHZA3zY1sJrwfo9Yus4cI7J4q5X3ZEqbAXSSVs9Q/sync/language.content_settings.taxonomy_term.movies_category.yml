@@ -1,0 +1,11 @@
+uuid: 8af34d4c-8dd7-4f86-bd43-d206379fc35c
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.movies_category
+id: taxonomy_term.movies_category
+target_entity_type_id: taxonomy_term
+target_bundle: movies_category
+default_langcode: site_default
+language_alterable: false

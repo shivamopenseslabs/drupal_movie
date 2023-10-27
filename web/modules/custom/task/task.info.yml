@@ -1,0 +1,5 @@
+name: 'Movies Api'
+type: module
+description: 'A custom module Employee Managment.'
+core_version_requirement: ^10 || ^9
+package: Custom

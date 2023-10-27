@@ -1,0 +1,8 @@
+uuid: 34f2d661-110a-4c46-b380-baddba1389ab
+langcode: en-gb
+status: true
+dependencies: {  }
+name: 'movies category'
+vid: movies_category
+description: ''
+weight: 0

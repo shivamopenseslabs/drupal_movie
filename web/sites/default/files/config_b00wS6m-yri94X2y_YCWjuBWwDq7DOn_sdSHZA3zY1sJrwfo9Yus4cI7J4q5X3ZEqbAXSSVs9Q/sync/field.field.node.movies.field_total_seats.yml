@@ -1,0 +1,19 @@
+uuid: d8985e40-b087-413f-ba39-414fffb57aa9
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_total_seats
+    - node.type.movies
+id: node.movies.field_total_seats
+field_name: field_total_seats
+entity_type: node
+bundle: movies
+label: 'total seats'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

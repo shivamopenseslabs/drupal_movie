@@ -1,0 +1,29 @@
+uuid: 261e9476-37f9-4b4d-be02-bf1c53dd52b6
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - filter.format.restricted_html
+    - rest.resource.all_apis
+  module:
+    - comment
+    - contact
+    - filter
+    - rest
+    - search
+    - system
+_core:
+  default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'administer rest resources'
+  - 'restful get all_apis'
+  - 'restful post all_apis'
+  - 'search content'
+  - 'use text format restricted_html'

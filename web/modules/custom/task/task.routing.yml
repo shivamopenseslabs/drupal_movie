@@ -1,0 +1,45 @@
+task.get_movies:
+  path: '/get/movies'
+  defaults:
+    _controller: '\Drupal\task\Controller\GetMovies::getMovies'
+  methods: [GET]
+  requirements:
+    _permission: 'access content' # Adjust permissions as needed.
+
+
+task.get_cat:
+  path: '/get/categories'
+  defaults:
+    _controller: '\Drupal\task\Controller\GetMovies::getCategories'
+  methods: [GET]
+  requirements:
+    _permission: 'access content' # Adjust permissions as needed.
+
+
+# task.movies_api:
+#   path: '/custom/movies'
+#   defaults:
+#     _controller: '\Drupal\task\Controller\TestMovies::getMovies'
+#   methods: [GET]
+#   requirements:
+#     _permission: 'access content' # Adjust permissions as needed.
+
+
+# task.movies_api:
+#   path: '/custom/movies'
+#   defaults:
+#     _controller: '\Drupal\custom_movies_api\Controller\MoviesApiController::getMovies'
+#     _title: 'Custom Movies API'
+#   methods: [GET]
+#   requirements:
+#     _permission: 'access content'
+
+
+task.get_apis:
+  path: '/get/movies/last'
+  defaults:
+    _controller: '\Drupal\task\Controller\GetApis::getMovies'
+  methods: [GET]
+  requirements:
+    _permission: 'access content' # Adjust permissions as needed.
+

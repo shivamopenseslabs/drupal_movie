@@ -1,0 +1,10 @@
+uuid: 23bef20f-6da9-4f60-9d0c-e47eec65a4cf
+langcode: en-gb
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 5VpawMrKPEPCkoO4YpPa0TDFO2dgiIHfTziJtwlmUxc
+id: html_yearless_date
+label: 'HTML Yearless date'
+locked: true
+pattern: m-d

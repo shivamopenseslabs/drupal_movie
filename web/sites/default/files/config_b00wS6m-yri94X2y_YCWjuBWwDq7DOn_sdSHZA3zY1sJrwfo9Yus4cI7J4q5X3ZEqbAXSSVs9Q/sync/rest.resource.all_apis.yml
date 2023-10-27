@@ -1,0 +1,18 @@
+uuid: f88dc345-92a9-4e33-8036-20e067feaf5b
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - serialization
+    - task
+    - user
+id: all_apis
+plugin_id: all_apis
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie

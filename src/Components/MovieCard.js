@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TailSpin } from "react-loader-spinner";
+import "../Components/MovieCard.css"
 function MovieCard(props) {
+
+  console.log(props.view)
   return (
     <div>
       {props.loader ? (
@@ -25,9 +28,14 @@ function MovieCard(props) {
         <div className="movies-div">
           {props.displayedData.map((item, index) => {
             return (
-              <div className="movie-card" key={index}>
+              <div
+                className={`movie-card ${
+                  props.view === "grid" ? "grid" : "list"
+                }`}
+                key={index}
+              >
                 <div>
-                  movie image : <img   src={item.movie_image} />
+                  movie image : <img src={item.movie_image} />
                 </div>
                 <p className="movie-info">Name : {item.name}</p>
                 <p className="movie-info">Cost : {item.movie_cost}</p>

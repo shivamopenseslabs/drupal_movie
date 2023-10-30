@@ -1,0 +1,42 @@
+.categories {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+  }
+  
+  .categories h2 {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .categories div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .categories input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  /* Optional: Style the "All" checkbox */
+  .categories input[value="All"] {
+    font-weight: bold;
+  }
+  
+  /* Optional: Style individual category checkboxes */
+  .categories input[type="checkbox"]:not([value="All"]) {
+    background-color: #4fa94d;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  
+  /* Optional: Hover effect for category checkboxes */
+  .categories input[type="checkbox"]:not([value="All"]):hover {
+    background-color: #378c3a;
+    cursor: pointer;
+  }

@@ -1,0 +1,42 @@
+/* MovieCard.css */
+.movie-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f4f4f4;
+  }
+  
+  /* Style for grid view */
+  .movie-card.grid {
+    display: inline-block;
+    width: 250px;
+    margin-right: 20px;
+    vertical-align: top;
+  }
+  
+  /* Style for list view */
+  .movie-card.list {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .movie-card img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+  }
+  
+  .movie-info {
+    margin: 10px 0;
+  }
+  
+  /* Optional: Hover effect for movie cards */
+  .movie-card:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+  }

@@ -13,78 +13,61 @@ function Movie() {
   let [categories, setCategories] = useState([]);
   let [category, setCategory] = useState("");
   let [movieName, setMovieName] = useState("");
+  let [cost, setCost] = useState("");
   let [loader, setLoader] = useState(true);
-  let [searchResults, setSearchResults] = useState([]);
+  let [view, setView] = useState("");
+
   const updateURL = (newPage) => {
     const newURL = new URL(window.location.href);
     newURL.searchParams.set("page", newPage);
     window.history.pushState({ page: newPage }, "", newURL.toString());
   };
+
+  const handleViewChange = (newView) => {
+    setView(newView);
+  };
   const handleCategoryRemove = (removedCategory) => {
-    // Remove the category from the current categories
     const updatedCategories = category
       .split(",")
       .filter((cat) => cat !== removedCategory);
-    // Update the category state with the updated categories
-    console.log(updatedCategories);
     setCategory(updatedCategories.join(","));
-
-    // Fetch movies for the updated categories
     fetchMoviesByCategory(updatedCategories.join(","));
   };
 
   const handlePageChange = (newPage) => {
-    // Update the 'page' state to reflect the new page
     setPage(newPage + 1);
-    // Update the URL
     updateURL(newPage + 1);
+  };
+
+  const handleCostChange = (newCost) => {
+    setCost(newCost);
+    setPage(1);
+
+    // Fetch movies based on the selected sorting
+    fetchMovies(category, movieName, newCost);
   };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const initialPage = parseInt(urlParams.get("page")) || 1;
-    let initialCategory = urlParams.get("category") || "";
+    const initialCategory = urlParams.get("category") || "";
     const initialMovieName = urlParams.get("name") || "";
+    const initialCost = urlParams.get("cost") || "";
+    const intialView = urlParams.get("view");
 
     setPage(initialPage);
     setCategory(initialCategory);
     setMovieName(initialMovieName);
+    setCost(initialCost);
+    setView(intialView);
 
-    let apiEndpoint = `http://localhost:8081/get/movies/last?page=${initialPage}`;
-
-    if (initialCategory || initialMovieName) {
-      apiEndpoint = `http://localhost:8081/get/movies/last?`;
-      if (initialCategory) {
-        apiEndpoint += `category=${initialCategory}`;
-        apiEndpoint += `&page=${initialPage}`;
-      }
-      if (initialMovieName) {
-        apiEndpoint += `&name=${initialMovieName}`;
-      }
-      if (initialCategory) {
-        setPage(1);
-      }
-    }
-
-    axios
-      .get(apiEndpoint)
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data.data);
-        setLoader(false);
-        setLastPage(res.data.total_pages);
-      })
-      .catch((err) => {
-        console.log("err", err);
-        setLoader(true);
-      });
-  }, [page, category, movieName]);
+    fetchMovies(initialCategory, initialMovieName, initialCost, intialView);
+  }, [page,cost,movieName, category]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8081/get/categories")
       .then((response) => {
-        console.log(response.data);
         setLoader(false);
         setCategories(response.data);
       })
@@ -93,19 +76,70 @@ function Movie() {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    // Add an event listener to handle "view" changes
+    window.addEventListener("popstate", (event) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const newView = urlParams.get("view");
+      handleViewChange(newView);
+    });
 
-  // const handlePageChange = (newPage) => {
-  //   setPage(newPage + 1);
-  //   updateURL(newPage + 1);
-  // };
-  // console.log(movieName)
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("popstate", handleViewChange);
+    };
+  }, [view]);
+
+  const fetchMovies = (
+    selectedCategory,
+    selectedMovieName,
+    selectedCost,
+    selectedView
+  ) => {
+    let apiEndpoint = `http://localhost:8081/get/movies/last?page=${page}`;
+
+    if (selectedCategory || selectedMovieName || selectedCost || selectedView) {
+      apiEndpoint = `http://localhost:8081/get/movies/last?`;
+
+      if (selectedCategory) {
+        apiEndpoint += `category=${selectedCategory}`;
+      }
+      if (selectedMovieName) {
+        apiEndpoint += `&name=${selectedMovieName}`;
+      }
+      if (selectedCost) {
+        apiEndpoint += `&cost=${selectedCost}`;
+      }
+      if (selectedView) {
+        apiEndpoint += `&view=${selectedView}`;
+      }
+      apiEndpoint += `&page=${page}`;
+    }
+
+    axios
+      .get(apiEndpoint)
+      .then((res) => {
+        setData(res.data.data);
+        console.log(res.data);
+        setLoader(false);
+        setView(res.data.view);
+        setLastPage(res.data.total_pages);
+      })
+      .catch((err) => {
+        console.log("err", err);
+        setLoader(true);
+      });
+  };
 
   const handleCategoryChange = (selectedCategory) => {
     setCategory(selectedCategory);
     setPage(1);
+    setMovieName("");
+    setCost("");
     const newURL = new URL(window.location.href);
     newURL.searchParams.set("category", selectedCategory);
     newURL.searchParams.delete("page");
+    newURL.searchParams.delete("cost");
     window.history.pushState(
       { category: selectedCategory },
       "",
@@ -119,7 +153,6 @@ function Movie() {
     axios
       .get(apiEndpoint)
       .then((res) => {
-        console.log(res.data);
         setData(res.data.data);
         setLoader(false);
         setLastPage(res.data.total_pages);
@@ -142,9 +175,14 @@ function Movie() {
       >
         <Input
           checkedCategory={category ? category.split(",") : []}
-          onCategoryRemove={handleCategoryRemove}
+          onCategoryChange={handleCategoryChange}
           movieName={movieName}
-          setMovieName={setMovieName} // Pass the setMovieName function
+          setMovieName={setMovieName}
+          cost={cost}
+          setCost={handleCostChange} // Updated to call handleCostChange
+          fetchMovies={fetchMovies}
+          view={view}
+          data = {data}
         />
         <Categories
           categories={categories}
@@ -156,7 +194,7 @@ function Movie() {
       <main>
         <div className="main">
           <div>
-            <MovieCard loader={loader} displayedData={data} />
+            <MovieCard loader={loader} displayedData={data} view={view} />
           </div>
         </div>
       </main>
@@ -171,6 +209,7 @@ function Movie() {
         >
           <Pagination
             lastPage={lastPage}
+            data={data.length}
             page={page}
             handlePageChange={handlePageChange}
           />

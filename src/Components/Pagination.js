@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactPaginate from "react-paginate";
+import "../Components/Pagination.css"
 
 function Pagination(props) {
   // const [currentPage , setCurrentPage] = useState();
@@ -7,6 +8,7 @@ function Pagination(props) {
     props.handlePageChange(data.selected);
     // setCurrentPage(data.selected)
   }
+  console.log("length")
   return (
     <div>
       <ReactPaginate
@@ -15,7 +17,7 @@ function Pagination(props) {
         // onPageChange={() => props.handlePageChange(page)}
         onPageChange={xyz}
         pageRangeDisplayed={3}
-        pageCount={25}
+        pageCount={props.lastPage}
         forcePage={props.page-1}
         marginPagesDisplayed={1}
         previousLabel={"< previous"}

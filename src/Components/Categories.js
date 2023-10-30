@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
+import "../Components/Categories.css"
 
 function Categories(props) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   useEffect(() => {
     // Ensure props.checkedCategory is a string
     const checkedCategoryString = String(props.checkedCategory);
-    
     // Convert string to array
     setSelectedCategories(checkedCategoryString.split(","));
   }, [props.checkedCategory]);
 
   const handleCategorySelection = (event) => {
     const selectedCategory = event.target.value;
-
     let updatedCategories;
-
     if (selectedCategories.includes(selectedCategory)) {
       updatedCategories = selectedCategories.filter(
         (category) => category !== selectedCategory
@@ -25,9 +23,7 @@ function Categories(props) {
 
     // Convert updatedCategories to a string for prop update
     const updatedCategoryString = updatedCategories.join(",");
-
     setSelectedCategories(updatedCategories);
-
     props.onCategoryChange(updatedCategoryString);
   };
 
@@ -40,7 +36,7 @@ function Categories(props) {
             type="checkbox"
             value="All"
             onChange={handleCategorySelection}
-            checked={selectedCategories.includes("All")}
+            checked={selectedCategories.includes("all")}
           />
           <span>All</span>
 
